@@ -3,7 +3,7 @@
   text-align: center;
   background-color: #1a1a1a;
   min-height: 100vh;
-  color: white;
+  color: rgb(255, 255, 255);
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;

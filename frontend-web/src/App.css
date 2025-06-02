@@ -385,3 +385,32 @@
   line-height: 1.5;
   font-size: 0.9em;
 }
+
+/* Rating Section Styles */
+.user-rating-form {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: 2em; /* Kích thước ngôi sao */
+  gap: 5px; /* Khoảng cách giữa các ngôi sao */
+}
+
+.star {
+  cursor: pointer;
+  color: #ccc; /* Màu ngôi sao chưa chọn */
+  transition: color 0.2s ease;
+}
+
+.star.selected {
+  color: #FFD700; /* Màu vàng ngôi sao đã chọn */
+}
+
+.star:hover {
+  color: #FFD700; /* Màu vàng khi hover */
+}

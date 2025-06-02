@@ -20,7 +20,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-
 // Connect to MongoDB local
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
@@ -31,8 +30,8 @@ mongoose.connect(process.env.MONGO_URI)
 });
 
 app.use('/api/auth', authRouter);
-app.use('/api', ratingRouter);
-app.use('/api', commentRouter);
+app.use('/api/ratings', ratingRouter); // <-- THAY ĐỔI DÒNG NÀY
+app.use('/api/comments', commentRouter); // <-- THAY ĐỔI DÒNG NÀY
 app.use('/api/movies', movieRouter);
 
 app.get('/', (req, res) => {

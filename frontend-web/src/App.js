@@ -12,7 +12,7 @@ import UpdateMoviePage from './pages/UpdateMoviePage';
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentSearch, setCurrentSearch] = useState('');
-  const [showSearchBar, setShowSearchBar] = useState(false); // New state for search bar visibility
+  const [showSearchBar, setShowSearchBar] = useState(false);
   const { user, isAuthenticated, logout, loading, isAdmin } = useAuth();
   const navigate = useNavigate();
 
@@ -36,6 +36,13 @@ function App() {
     setShowSearchBar(prev => !prev);
   };
 
+  // HÀM ĐỂ RESET TÌM KIẾM KHI CLICK LOGO
+  const handleLogoClick = () => {
+    setSearchTerm('');     // Xóa nội dung trong ô input tìm kiếm
+    setCurrentSearch('');  // Xóa giá trị tìm kiếm hiện tại đang dùng cho MovieList
+    // Việc điều hướng về trang chủ ("/") đã được Link component xử lý
+  };
+
   if (loading) {
     return (
       <div className="App" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -49,13 +56,15 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="header-left"> {/* Container cho Logo */}
-          <div className="logo">
+        <div className="header-left">
+          {/* GỌI HÀM handleLogoClick KHI CLICK VÀO LOGO */}
+          <div className="logo" onClick={handleLogoClick}>
             <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>LOGO</Link>
           </div>
         </div>
 
-        <div className="header-right-top"> {/* New container for search icon and login/signup */}
+        {/* THỨ TỰ ĐÚNG: ICON TÌM KIẾM TRƯỚC, SAU ĐÓ ĐẾN NAV (NÚT LOGIN) */}
+        <div className="header-right-top">
           <div className="search-icon" onClick={toggleSearchBar}>
             🔍 {/* Search icon */}
           </div>
@@ -81,9 +90,9 @@ function App() {
           </nav>
         </div>
         
-        {/* Search bar, conditionally rendered based on showSearchBar state and screen width */}
+        {/* Thanh tìm kiếm mobile (hiển thị dưới header chính khi active) */}
         {showSearchBar && (
-          <div className="search-bar-mobile"> {/* New class for mobile search bar */}
+          <div className="search-bar-mobile">
             <input
               type="text"
               placeholder="Search movies by title or genre..."
@@ -99,8 +108,8 @@ function App() {
           </div>
         )}
 
-        {/* Original search bar for desktop, will be hidden on mobile via CSS */}
-        <div className="search-bar-desktop"> {/* New class for desktop search bar */}
+        {/* Thanh tìm kiếm desktop (ẩn trên mobile bởi CSS) */}
+        <div className="search-bar-desktop">
             <input
               type="text"
               placeholder="Search movies by title or genre..."

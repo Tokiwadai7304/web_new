@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // Import useAuth hook
+import { useNavigate, Link } from 'react-router-dom'; // Import Link
+import { useAuth } from '../context/AuthContext';
 import '../App.css';
 
 function LoginPage() {
@@ -10,7 +10,7 @@ function LoginPage() {
   const [success, setSuccess] = useState(null);
 
   const navigate = useNavigate();
-  const { login } = useAuth(); // Lấy hàm login từ AuthContext
+  const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,7 +19,7 @@ function LoginPage() {
     setSuccess(null);
 
     try {
-      await login(email, password); // Gọi hàm login từ context
+      await login(email, password);
       
       setSuccess('Login successful! Redirecting to home...');
       console.log('Login successful.');
@@ -65,6 +65,10 @@ function LoginPage() {
         </div>
         <button type="submit">Login</button>
       </form>
+      {/* Thêm liên kết đến trang đăng ký ở đây */}
+      <p style={{ marginTop: '20px', color: '#ccc' }}>
+        Don't have an account? <Link to="/register" style={{ color: '#007bff', textDecoration: 'none' }}>Sign Up</Link>
+      </p>
     </div>
   );
 }

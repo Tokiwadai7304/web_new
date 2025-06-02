@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link
-import './MovieList.css';
+import { Link } from 'react-router-dom';
+import './MovieList.css'; // Đảm bảo import CSS mới
 
 function MovieList({ searchKeyword }) {
   const [movies, setMovies] = useState([]);
@@ -48,19 +48,20 @@ function MovieList({ searchKeyword }) {
       {movies.length === 0 ? (
         <p>No movies found for your search.</p>
       ) : (
-        <div className="movie-grid">
+        <div className="movie-list"> {/* Đổi từ movie-grid sang movie-list */}
           {movies.map(movie => (
-            // Bọc movie-card trong Link
-            <Link to={`/movies/${movie._id}`} key={movie._id} className="movie-card-link"> 
-              <div className="movie-card">
-                {movie.posterUrl && <img src={movie.posterUrl} alt={movie.title} className="movie-poster" />}
-                <h3>{movie.title}</h3>
-                <p><strong>Genre:</strong> {movie.genre}</p>
-                <p><strong>Director:</strong> {movie.director}</p>
-                <p><strong>Release Date:</strong> {new Date(movie.releaseDate).toLocaleDateString()}</p>
-                <p>{movie.description}</p>
-                {/* Có thể hiển thị rating trung bình ở đây nếu muốn */}
-                {movie.averageRating !== undefined && <p>Rating: {movie.averageRating}/5 ({movie.numberOfRatings || 0} votes)</p>}
+            <Link to={`/movies/${movie._id}`} key={movie._id} className="movie-list-item-link"> {/* Thêm class mới cho link */}
+              <div className="movie-list-item"> {/* Thêm class mới cho item */}
+                <div className="movie-poster-wrapper">
+                  {movie.posterUrl && <img src={movie.posterUrl} alt={movie.title} className="movie-poster-list" />}
+                </div>
+                <div className="movie-info-list">
+                  <h3>{movie.title}</h3>
+                  <p><strong>Rating:</strong> {movie.averageRating}/5 ({movie.numberOfRatings || 0} votes)</p>
+                  <p><strong>Genre:</strong> {movie.genre}</p>
+                  <p><strong>Release Date:</strong> {new Date(movie.releaseDate).toLocaleDateString()}</p>
+                  {/* Các thông tin khác như director, description sẽ không hiển thị ở đây */}
+                </div>
               </div>
             </Link>
           ))}

@@ -1,59 +1,144 @@
+/* Container cho toàn bộ danh sách phim */
 .movie-list-container {
   padding: 20px;
   margin: 20px auto;
-  max-width: 1200px;
-  background-color: #f0f2f5;
+  max-width: 1000px; /* Giảm max-width cho list view để gọn hơn */
+  background-color: #282c34; /* Giữ màu nền tối */
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: white; /* Giữ màu chữ trắng */
 }
 
 .movie-list-container h2 {
-  color: #333;
+  color: white; /* Giữ màu chữ trắng */
   margin-bottom: 20px;
+  text-align: center; /* Căn giữa tiêu đề */
 }
 
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
-  gap: 20px;
-  justify-content: center;
+/* Styles cho danh sách phim dạng list */
+.movie-list {
+  display: flex;
+  flex-direction: column; /* Xếp các item theo chiều dọc */
+  gap: 15px; /* Khoảng cách giữa các item trong list */
 }
 
-.movie-card {
-  background-color: #fff;
+/* Styles cho từng item phim trong danh sách */
+.movie-list-item-link {
+  text-decoration: none; /* Bỏ gạch chân cho link */
+  color: inherit; /* Kế thừa màu chữ */
+}
+
+.movie-list-item {
+  background-color: #333; /* Màu nền cho mỗi item */
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 15px;
-  text-align: left;
-  transition: transform 0.2s ease-in-out;
+  display: flex; /* Sử dụng flexbox để sắp xếp poster và thông tin */
+  align-items: center; /* Căn giữa các item theo chiều dọc */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Hiệu ứng hover */
+  position: relative; /* Cho phép sử dụng z-index nếu cần */
+  overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
 }
 
-.movie-card:hover {
-  transform: translateY(-5px);
+.movie-list-item:hover {
+  transform: translateY(-3px); /* Hiệu ứng nâng nhẹ khi hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Hiệu ứng bóng đổ đậm hơn khi hover */
 }
 
-.movie-card h3 {
-  color: #007bff;
+/* Styles cho ảnh poster trong list view */
+.movie-poster-wrapper {
+  flex-shrink: 0; /* Ngăn poster co lại */
+  width: 90px; /* Chiều rộng cố định cho poster */
+  height: 120px; /* Chiều cao cố định cho poster */
+  margin-right: 20px; /* Khoảng cách giữa poster và thông tin */
+  border-radius: 4px;
+  overflow: hidden; /* Cắt bỏ phần thừa của ảnh */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.movie-poster-list {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh bao phủ toàn bộ vùng */
+  display: block; /* Loại bỏ khoảng trắng dưới ảnh */
+}
+
+/* Styles cho phần thông tin văn bản */
+.movie-info-list {
+  flex-grow: 1; /* Cho phép phần thông tin mở rộng */
+  text-align: left; /* Căn lề trái cho text */
+}
+
+.movie-info-list h3 {
+  color: #00aaff; /* Màu xanh sáng cho tiêu đề phim */
   margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1.2em;
+  margin-bottom: 8px; /* Khoảng cách dưới tiêu đề */
+  font-size: 1.4em; /* Kích thước font lớn hơn một chút */
+  line-height: 1.2;
 }
 
-.movie-card p {
-  color: #555;
+.movie-info-list p {
+  color: #ccc; /* Màu chữ xám nhạt cho thông tin */
   font-size: 0.9em;
-  line-height: 1.5;
+  margin-bottom: 5px; /* Khoảng cách giữa các dòng thông tin */
+  line-height: 1.4;
 }
 
-.movie-poster {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-    margin-bottom: 10px;
+.movie-info-list strong {
+  color: white; /* Màu trắng cho các label in đậm */
 }
 
-.error-message {
-  color: red;
-  font-weight: bold;
-  text-align: center;
+
+/* Responsive adjustments for MovieList */
+@media (max-width: 800px) {
+  .movie-list-container {
+    padding: 15px;
+    margin: 15px auto;
+  }
+
+  .movie-list {
+    gap: 10px;
+  }
+
+  .movie-list-item {
+    flex-direction: row; /* Thay đổi: Quay lại dạng hàng (row) trên mobile */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding: 10px;
+  }
+
+  .movie-poster-wrapper {
+    width: 70px; /* Giảm kích thước poster trên mobile để phù hợp hơn */
+    height: 100px; /* Giảm chiều cao tương ứng */
+    margin-right: 15px; /* Giữ khoảng cách giữa poster và thông tin */
+    margin-bottom: 0; /* Bỏ margin-bottom nếu là dạng row */
+  }
+  .movie-poster-list {
+    object-fit: cover; /* Giữ nguyên cover */
+  }
+
+  .movie-info-list {
+    width: auto; /* Để width tự động điều chỉnh */
+  }
+
+  .movie-info-list h3 {
+    font-size: 1.1em; /* Giảm kích thước font cho tiêu đề trên mobile */
+    text-align: left; /* Căn lề trái */
+  }
+  .movie-info-list p {
+    font-size: 0.8em; /* Giảm kích thước font cho thông tin */
+  }
+}
+
+@media (min-width: 801px) and (max-width: 1200px) {
+  .movie-list-container {
+    max-width: 90%;
+  }
+  .movie-poster-wrapper {
+    width: 80px;
+    height: 110px;
+    margin-right: 15px;
+  }
+  .movie-info-list h3 {
+    font-size: 1.25em;
+  }
 }

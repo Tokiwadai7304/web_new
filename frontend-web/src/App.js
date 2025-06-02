@@ -12,6 +12,7 @@ import UpdateMoviePage from './pages/UpdateMoviePage';
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentSearch, setCurrentSearch] = useState('');
+  const [showSearchBar, setShowSearchBar] = useState(false); // New state for search bar visibility
   const { user, isAuthenticated, logout, loading, isAdmin } = useAuth();
   const navigate = useNavigate();
 
@@ -21,11 +22,18 @@ function App() {
 
   const handleSearchSubmit = () => {
     setCurrentSearch(searchTerm);
+    if (window.innerWidth <= 800) { // Hide search bar after search on mobile
+      setShowSearchBar(false);
+    }
   };
 
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const toggleSearchBar = () => { // New function to toggle search bar visibility
+    setShowSearchBar(prev => !prev);
   };
 
   if (loading) {
@@ -41,31 +49,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="header-left"> {/* Container cho Logo và Menu */}
+        <div className="header-left"> {/* Container cho Logo */}
           <div className="logo">
-            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>LOGO</Link> {/* Thay đổi thành LOGO */}
-          </div>
-          <div className="menu-icon">☰</div> {/* Biểu tượng Menu (Hamburger) */}
-        </div>
-
-        <div className="header-center"> {/* Container cho Search Bar */}
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search movies by title or genre..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  handleSearchSubmit();
-                }
-              }}
-            />
-            <button onClick={handleSearchSubmit}>Search</button>
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>LOGO</Link>
           </div>
         </div>
 
-        <div className="header-right"> {/* Container cho Login/Sign up và Logout */}
+        <div className="header-right-top"> {/* New container for search icon and login/signup */}
+          <div className="search-icon" onClick={toggleSearchBar}>
+            🔍 {/* Search icon */}
+          </div>
           <nav className="main-nav">
             <ul>
               {isAuthenticated ? (
@@ -81,13 +74,47 @@ function App() {
                 </>
               ) : (
                 <>
-                  {/* Thay thế nút Login/Register bằng một nút duy nhất như trong wireframe */}
                   <li><Link to="/login" className="login-signup-button">Login/Sign up</Link></li>
                 </>
               )}
             </ul>
           </nav>
         </div>
+        
+        {/* Search bar, conditionally rendered based on showSearchBar state and screen width */}
+        {showSearchBar && (
+          <div className="search-bar-mobile"> {/* New class for mobile search bar */}
+            <input
+              type="text"
+              placeholder="Search movies by title or genre..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearchSubmit();
+                }
+              }}
+            />
+            <button onClick={handleSearchSubmit}>Search</button>
+          </div>
+        )}
+
+        {/* Original search bar for desktop, will be hidden on mobile via CSS */}
+        <div className="search-bar-desktop"> {/* New class for desktop search bar */}
+            <input
+              type="text"
+              placeholder="Search movies by title or genre..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearchSubmit();
+                }
+              }}
+            />
+            <button onClick={handleSearchSubmit}>Search</button>
+          </div>
+
       </header>
       <main>
         <Routes>

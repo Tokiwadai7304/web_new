@@ -1,34 +1,46 @@
 /* General App Styles */
 .App {
   text-align: center;
-  background-color: #1a1a1a; /* Dark background for the entire app */
-  min-height: 100vh; /* Ensure it covers the full viewport height */
-  color: white; /* Default text color for the app */
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  color: white;
   font-family: Arial, sans-serif;
+  display: flex; /* Make App a flex container */
+  flex-direction: column; /* Stack header and main vertically */
 }
 
 /* Header Styles */
 .App-header {
-  background-color: #282c34; /* Slightly darker grey for the header */
+  background-color: #282c34;
   padding: 10px 20px;
   display: flex;
-  justify-content: space-between; /* Distribute items with space between them */
-  align-items: center; /* Vertically align items in the center */
+  justify-content: space-between; /* Logo left, everything else right */
+  align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
+  /* flex-wrap: wrap; Removed by design for desktop, handled in mobile media query if needed */
   gap: 10px; /* Space between header sections */
+  width: 100%; /* Ensure header takes full width */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
-.header-left, .header-center, .header-right {
+/* Outer wrapper for the center and right parts of the header on desktop */
+.header-center-right-wrapper {
   display: flex;
   align-items: center;
-  flex-shrink: 0; /* Prevent items from shrinking too much */
+  flex-grow: 1; /* Allows this wrapper to take available space */
+  justify-content: center; /* Center content within this wrapper initially */
+  gap: 15px; /* Space between search bar and nav */
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .logo {
   font-size: 2em;
   font-weight: bold;
-  margin-right: 20px;
 }
 
 .logo a {
@@ -37,21 +49,38 @@
 }
 
 .menu-icon {
-  font-size: 2em;
+  display: none; /* ẨN HOÀN TOÀN NÚT MENU */
+}
+
+/* Search Icon for mobile (hidden on desktop) */
+.search-icon {
+  font-size: 1.8em;
   cursor: pointer;
-  display: none; /* Hidden by default, shown on mobile */
+  color: white;
+  display: none; /* Hidden by default, shown only on mobile */
 }
 
-.search-bar {
+/* Search bar styling */
+.search-bar-desktop { /* Desktop search bar, by default visible and centered */
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Center input and button */
   align-items: center;
-  flex-grow: 1; /* Allows the search bar to expand */
+  flex-grow: 1; /* Allows the search bar to expand to fill available space */
   max-width: 500px; /* Maximum width for the search bar */
-  margin: 0 20px; /* Horizontal margin */
+  /* margin: 0 20px; This margin will be handled by gap in header-center-right-wrapper */
 }
 
-.search-bar input {
+.search-bar-mobile { /* Mobile specific search bar, initially hidden */
+  display: none; /* Hidden by default, will be controlled by JS and media query */
+  flex-direction: column; /* Stack input and button */
+  width: 100%;
+  padding: 10px 20px; /* Padding to match header */
+  box-sizing: border-box;
+  /* margin-top: 10px; This margin will be handled by the App flex container if needed */
+}
+
+.search-bar-desktop input,
+.search-bar-mobile input {
   padding: 8px 12px;
   border-radius: 5px;
   border: 1px solid #444;
@@ -59,15 +88,22 @@
   color: white;
   font-size: 0.9em;
   width: 100%;
-  margin-right: 5px;
+  margin-right: 5px; /* Keep for desktop input */
   outline: none;
 }
 
-.search-bar input::placeholder {
+.search-bar-mobile input {
+  margin-right: 0; /* Remove for mobile input */
+  margin-bottom: 10px; /* Space below input on mobile */
+}
+
+.search-bar-desktop input::placeholder,
+.search-bar-mobile input::placeholder {
   color: #bbb;
 }
 
-.search-bar button {
+.search-bar-desktop button,
+.search-bar-mobile button {
   padding: 8px 15px;
   background-color: #007bff;
   color: white;
@@ -78,7 +114,12 @@
   transition: background-color 0.3s ease;
 }
 
-.search-bar button:hover {
+.search-bar-mobile button {
+  width: 100%; /* Full width button on mobile */
+}
+
+.search-bar-desktop button:hover,
+.search-bar-mobile button:hover {
   background-color: #0056b3;
 }
 
@@ -89,39 +130,43 @@
   display: flex;
   gap: 15px;
   align-items: center;
+  flex-shrink: 0; /* Prevent nav from shrinking too much */
 }
 
 .main-nav li a,
 .main-nav li span,
-.nav-button,
-.login-signup-button {
+.nav-button {
   color: white;
   text-decoration: none;
   font-size: 1em;
   padding: 8px 12px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  white-space: nowrap; /* Prevent text from wrapping */
+  white-space: nowrap;
 }
 
 .main-nav li a:hover,
-.nav-button:hover,
-.login-signup-button:hover {
+.nav-button:hover {
     background-color: #0056b3;
 }
 
-/* Specific styling for login/signup button */
 .login-signup-button {
-    background-color: #28a745; /* Green color for Login/Sign up */
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
 .login-signup-button:hover {
     background-color: #218838;
 }
 
-/* Styling for nav buttons (Logout) */
 .nav-button {
-  background-color: #dc3545; /* Red color for logout */
+  background-color: #dc3545;
   color: white;
   border: none;
   border-radius: 5px;
@@ -137,7 +182,8 @@
 
 /* Main content adjustments */
 main {
-  padding: 20px 0; /* Add horizontal padding for main content */
+  flex-grow: 1; /* Allow main content to take remaining space */
+  padding: 20px 0;
 }
 
 /* General Form Styling for Login/Register and Add/Update Movie */
@@ -174,7 +220,7 @@ main {
 }
 
 .form-group input,
-.auth-form textarea { /* Apply to textarea as well */
+.auth-form textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #555;
@@ -240,51 +286,9 @@ main {
   margin-bottom: 20px;
 }
 
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  justify-content: center;
-}
+/* Removed specific movie-grid and movie-card styles as MovieList.css now handles list view */
+/* Keeping for reference if needed, but not actively used by MovieList component now */
 
-.movie-card-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.movie-card-link:hover .movie-card {
-  transform: translateY(-5px);
-}
-
-.movie-card {
-  background-color: #333;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  padding: 15px;
-  text-align: left;
-  transition: transform 0.2s ease-in-out;
-  color: white;
-}
-
-.movie-card h3 {
-  color: #00aaff;
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1.2em;
-}
-
-.movie-card p {
-  color: #ccc;
-  font-size: 0.9em;
-  line-height: 1.5;
-}
-
-.movie-poster {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
 
 /* Movie Detail Page Styles */
 .movie-detail-page {
@@ -300,7 +304,7 @@ main {
   display: flex;
   align-items: center;
   margin-bottom: 30px;
-  flex-direction: column; /* Default to column for small screens */
+  flex-direction: column;
   text-align: center;
 }
 
@@ -315,7 +319,7 @@ main {
 .movie-detail-page h1 {
   color: #00aaff;
   font-size: 2.5em;
-  margin-left: 0; /* Reset margin for column layout */
+  margin-left: 0;
 }
 
 .movie-info p {
@@ -357,11 +361,11 @@ main {
 }
 
 .comment-form textarea {
-  resize: vertical; /* Allow vertical resizing */
+  resize: vertical;
 }
 
 .comment-form button {
-  align-self: flex-end; /* Align button to the right */
+  align-self: flex-end;
 }
 
 .comments-list {
@@ -382,13 +386,13 @@ main {
   color: #00aaff;
   margin-bottom: 5px;
   font-size: 0.95em;
-  display: flex; /* Use flex to align name, date, and delete button */
+  display: flex;
   align-items: center;
-  justify-content: space-between; /* Push delete button to the right */
+  justify-content: space-between;
 }
 
 .comment-author strong {
-    flex-shrink: 0; /* Prevent name from shrinking too much */
+    flex-shrink: 0;
 }
 
 .comment-date {
@@ -396,8 +400,8 @@ main {
   color: #bbb;
   font-weight: normal;
   margin-left: 10px;
-  flex-grow: 1; /* Allow date to take up available space */
-  text-align: left; /* Align date to the left within its space */
+  flex-grow: 1;
+  text-align: left;
 }
 
 .comment-content {
@@ -417,7 +421,7 @@ main {
   font-size: 0.8em;
   margin-left: 10px;
   transition: background-color 0.3s ease;
-  flex-shrink: 0; /* Prevent button from shrinking */
+  flex-shrink: 0;
 }
 
 .delete-comment-button:hover {
@@ -491,57 +495,89 @@ main {
 /* Responsive Styles (Media Queries)         */
 /* ========================================= */
 
+/* --- Default styles for desktop (min-width: 801px is used here, then larger for 1201px) --- */
+/* The general styles above now act as base desktop styles for App-header layout */
+.App-header .search-bar-desktop {
+  order: 2; /* Search bar in the middle */
+  flex-grow: 1; /* Allow it to take available space */
+  max-width: 500px; /* Keep max-width */
+  margin: 0 20px; /* Space on sides */
+}
+
+.App-header .header-left {
+  order: 1; /* Logo on the left */
+}
+
+.App-header .header-right-top {
+  order: 3; /* Nav on the right */
+  margin-left: auto; /* Push to the right */
+  gap: 15px; /* Space between search icon (hidden) and nav */
+}
+
+
 /* --- For screens smaller than 800px (e.g., portrait tablets, phones) --- */
 @media (max-width: 800px) {
   .App-header {
-    flex-direction: column; /* Stack header items vertically */
-    padding: 15px;
-    align-items: stretch; /* Stretch items to fill width */
-  }
-
-  .header-left, .header-center, .header-right {
-    width: 100%; /* Take full width */
-    justify-content: center; /* Center content within their sections */
-    margin-bottom: 10px; /* Add space between stacked sections */
+    flex-direction: row; /* Keep items in a row */
+    justify-content: space-between; /* Logo left, icon+nav right */
+    padding: 10px 15px;
+    flex-wrap: nowrap; /* Prevent wrapping in header row */
+    align-items: center; /* Vertically align items */
   }
 
   .header-left {
-    justify-content: space-between; /* Space out logo and menu icon */
-  }
-
-  .menu-icon {
-    display: block; /* Show menu icon on small screens */
+    justify-content: flex-start; /* Logo to the left */
+    margin-bottom: 0;
   }
 
   .logo {
-    margin-right: 0; /* Remove right margin for logo */
+    font-size: 1.8em; /* Slightly smaller logo on mobile */
   }
 
-  .search-bar {
-    flex-direction: column;
-    width: 100%;
-    margin: 0; /* Remove horizontal margin */
+  .header-right-top {
+    display: flex; /* Ensure search icon and nav are next to each other */
+    align-items: center;
+    gap: 10px; /* Space between search icon and nav */
+    margin-left: auto; /* Push to the right */
   }
 
-  .search-bar input {
+  .search-icon {
+    display: block; /* Show search icon on mobile */
+    flex-shrink: 0; /* Prevent icon from shrinking */
+  }
+
+  .search-bar-desktop {
+    display: none; /* Hide desktop search bar */
+  }
+
+  /* Mobile search bar: displayed below the header when activated by JS */
+  .search-bar-mobile {
+    display: flex; /* Will be toggled by JS. Default to flex to stack */
+    flex-direction: column; /* Input and button stack vertically */
     width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    margin-top: 0; /* No top margin needed, as it will be direct child of App */
+    background-color: #282c34; /* Match header background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .search-bar-mobile input {
     margin-right: 0;
     margin-bottom: 10px;
   }
-
-  .search-bar button {
+  .search-bar-mobile button {
     width: 100%;
   }
 
   .main-nav ul {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    margin-top: 10px; /* Add margin after search bar */
+    flex-direction: row; /* Nav items in a row */
+    gap: 8px; /* Slightly less gap */
+    width: auto;
+    margin-top: 0;
   }
 
   .main-nav li {
-    width: 100%;
+    width: auto;
     text-align: center;
   }
 
@@ -549,34 +585,28 @@ main {
   .main-nav li span,
   .nav-button,
   .login-signup-button {
-    display: block;
-    width: 100%;
-    padding: 10px 0;
-    background-color: #333;
-    border-radius: 5px;
+    display: inline-block; /* Ensure they behave like inline elements */
+    padding: 6px 8px; /* Adjust padding for smaller buttons */
+    font-size: 0.85em; /* Smaller font size */
+    /* Ensure colors are set here, if needed, to override other rules */
+    background-color: #28a745; /* Green for login/signup */
+    color: white;
   }
-  .main-nav li a:hover,
-  .nav-button:hover,
-  .login-signup-button:hover {
-      background-color: #0056b3;
+  .nav-button {
+    background-color: #dc3545; /* Red for logout */
   }
 
+
   .container {
-    margin: 20px auto;
+    margin: 15px auto; /* Reduced margin */
     padding: 15px;
   }
 
-  .movie-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 15px;
-  }
-
-  .movie-card h3 {
-    font-size: 1em;
-  }
+  /* Movie list adjustments (already done in MovieList.css) */
+  /* .movie-list-item and its children styles are handled in MovieList.css */
 
   .movie-detail-page {
-    padding: 20px;
+    padding: 15px; /* Reduced padding */
   }
 
   .movie-detail-header {
@@ -585,13 +615,13 @@ main {
   }
 
   .movie-detail-poster {
-    max-width: 200px;
+    max-width: 150px; /* Smaller poster on mobile detail page */
     margin-bottom: 15px;
-    margin-right: 0; /* Reset margin for column layout */
+    margin-right: 0;
   }
 
   .movie-detail-page h1 {
-    font-size: 1.8em;
+    font-size: 1.5em; /* Smaller title on mobile detail page */
     margin-left: 0;
   }
 
@@ -601,39 +631,47 @@ main {
   }
 
   .star-rating {
-    font-size: 1.2em;
-    gap: 2px;
+    font-size: 1em; /* Smaller stars */
+    gap: 1px;
   }
 
   .comment-author {
-      flex-direction: column; /* Stack author name, date, and delete button */
+      flex-direction: column;
       align-items: flex-start;
       gap: 5px;
   }
 
   .comment-date {
-      margin-left: 0; /* Reset margin */
+      margin-left: 0;
       text-align: left;
   }
 
   .delete-comment-button {
-      margin-left: 0; /* Reset margin */
-      align-self: flex-end; /* Align button to the right */
+      margin-left: 0;
+      align-self: flex-end;
   }
 }
 
 /* --- For screens from 801px to 1200px (e.g., landscape tablets, small laptops) --- */
 @media (min-width: 801px) and (max-width: 1200px) {
   .App-header {
-    padding: 15px 20px; /* Slightly more padding */
+    padding: 15px 20px;
   }
 
   .logo {
     font-size: 1.8em;
   }
 
-  .search-bar {
-    max-width: 400px;
+  .search-bar-desktop {
+    display: flex;
+    max-width: 400px; /* Keep consistent max-width */
+    margin: 0 15px; /* Adjust margin */
+  }
+  .search-icon {
+    display: none;
+  }
+  .search-bar-mobile {
+    display: none;
   }
 
   .main-nav ul {
@@ -652,17 +690,12 @@ main {
     max-width: 90%;
   }
 
-  .movie-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-  }
-
   .movie-detail-page {
     max-width: 800px;
   }
 
   .movie-detail-header {
-    flex-direction: row; /* Keep poster and title side-by-side */
+    flex-direction: row;
     align-items: flex-start;
   }
 
@@ -677,8 +710,7 @@ main {
   }
 }
 
-/* --- For screens larger than 1200px (large desktops) --- */
-/* Default styles are already set for large screens, so minimal changes here */
+/* --- For screens larger than 1201px (large desktops) --- */
 @media (min-width: 1201px) {
   .App-header {
     padding: 20px 30px;
@@ -688,8 +720,16 @@ main {
     font-size: 2em;
   }
 
-  .search-bar {
+  .search-bar-desktop {
+    display: flex;
     max-width: 500px;
+    margin: 0 20px;
+  }
+  .search-icon {
+    display: none;
+  }
+  .search-bar-mobile {
+    display: none;
   }
 
   .main-nav ul {
@@ -706,11 +746,6 @@ main {
 
   .container {
     max-width: 1200px;
-  }
-
-  .movie-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
   }
 
   .movie-detail-page {

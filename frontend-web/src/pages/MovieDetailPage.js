@@ -6,7 +6,7 @@ import '../App.css';
 
 function MovieDetailPage() {
   const { id } = useParams();
-  const { isAuthenticated, token, user } = useAuth(); // Thêm user để biết ID của người dùng hiện tại
+  const { isAuthenticated, token, user, isAdmin } = useAuth();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,11 +15,12 @@ function MovieDetailPage() {
   const [commentError, setCommentError] = useState(null);
   const [commentLoading, setCommentLoading] = useState(false);
 
-  const [userRating, setUserRating] = useState(0); // State để lưu đánh giá của người dùng hiện tại
-  const [ratingError, setRatingError] = useState(null); // State lỗi cho đánh giá
-  const [ratingSuccess, setRatingSuccess] = useState(null); // State thành công cho đánh giá
+  const [userRating, setUserRating] = useState(0);
+  const [userRatingId, setUserRatingId] = useState(null); 
+  const [ratingError, setRatingError] = useState(null);
+  const [ratingSuccess, setRatingSuccess] = useState(null);
+  const [ratingLoading, setRatingLoading] = useState(false);
 
-  // Hàm để fetch chi tiết phim (đã có)
   const fetchMovie = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -36,9 +37,8 @@ function MovieDetailPage() {
 
   useEffect(() => {
     fetchMovie();
-  }, [fetchMovie]); // Depend on fetchMovie
+  }, [fetchMovie]);
 
-  // Hàm để fetch bình luận của phim (đã có)
   const fetchComments = useCallback(async () => {
     setCommentLoading(true);
     setCommentError(null);
@@ -57,10 +57,10 @@ function MovieDetailPage() {
     fetchComments();
   }, [fetchComments]);
 
-  // Hàm để lấy đánh giá của người dùng hiện tại (nếu có)
   const fetchUserRating = useCallback(async () => {
     if (!isAuthenticated || !user) {
-        setUserRating(0); // Reset nếu không đăng nhập
+        setUserRating(0);
+        setUserRatingId(null); 
         return;
     }
     try {
@@ -69,12 +69,14 @@ function MovieDetailPage() {
                 Authorization: `Bearer ${token}`,
             },
         });
-        // Tìm đánh giá của người dùng hiện tại trong danh sách
-        const currentUserRating = response.data.find(r => r.userId === user.id);
-        setUserRating(currentUserRating ? currentUserRating.rating : 0);
+        // Backend bây giờ trả về userId dưới dạng chuỗi ID
+        const currentUserRatingData = response.data.find(r => r.userId === user.id); 
+        setUserRating(currentUserRatingData ? currentUserRatingData.rating : 0);
+        setUserRatingId(currentUserRatingData ? currentUserRatingData._id : null); 
     } catch (err) {
         console.error('Error fetching user rating:', err);
-        setUserRating(0); // Đặt về 0 nếu có lỗi
+        setUserRating(0);
+        setUserRatingId(null);
     }
   }, [id, isAuthenticated, token, user]);
 
@@ -82,8 +84,6 @@ function MovieDetailPage() {
     fetchUserRating();
   }, [fetchUserRating]);
 
-
-  // Hàm xử lý gửi bình luận mới (đã có)
   const handleAddComment = async (event) => {
     event.preventDefault();
     setCommentError(null);
@@ -110,22 +110,22 @@ function MovieDetailPage() {
     }
   };
 
-  // Hàm xử lý gửi/cập nhật đánh giá
   const handleRateMovie = async (ratingValue) => {
     if (!isAuthenticated) {
         setRatingError('Please login to rate movies.');
         return;
     }
-    if (ratingValue < 1 || ratingValue > 5) { // Kiểm tra giá trị hợp lệ
-        setRatingError('Rating must be between 1 and 5.');
+    if (ratingValue < 1 || ratingValue > 5) {
+        setRatingError('Rating must be an integer between 1 and 5.');
         return;
     }
     setRatingError(null);
     setRatingSuccess(null);
+    setRatingLoading(true);
 
     try {
         await axios.post(
-            'http://localhost:8000/api/ratings', // API rateMovie
+            'http://localhost:8000/api/ratings',
             { movieId: id, rating: ratingValue },
             {
                 headers: {
@@ -134,11 +134,68 @@ function MovieDetailPage() {
             }
         );
         setRatingSuccess('Rating submitted successfully!');
-        setUserRating(ratingValue); // Cập nhật ngay đánh giá của người dùng
-        fetchMovie(); // Tải lại thông tin phim để cập nhật điểm trung bình
+        setUserRating(ratingValue);
+        fetchMovie();
+        fetchUserRating(); 
     } catch (err) {
-        setRatingError(err.response?.data?.message || 'Failed to submit rating.');
-        console.error('Error submitting rating:', err);
+      setRatingError(err.response?.data?.message || 'Failed to submit rating.');
+      console.error('Error submitting rating:', err);
+    } finally {
+        setRatingLoading(false);
+    }
+  };
+
+  const handleDeleteComment = async (commentId, commentAuthorId) => {
+    if (!window.confirm("Are you sure you want to delete this comment?")) {
+      return;
+    }
+    setCommentLoading(true);
+    setCommentError(null);
+
+    try {
+      await axios.delete(
+        `http://localhost:8000/api/comments/${commentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      fetchComments();
+    } catch (err) {
+      setCommentError(err.response?.data?.message || 'Failed to delete comment.');
+      console.error('Error deleting comment:', err);
+    } finally {
+      setCommentLoading(false);
+    }
+  };
+
+  const handleDeleteRating = async () => {
+    if (!userRatingId || !window.confirm("Are you sure you want to delete your rating?")) {
+      return;
+    }
+    setRatingLoading(true);
+    setRatingError(null);
+    setRatingSuccess(null);
+
+    try {
+      await axios.delete(
+        `http://localhost:8000/api/ratings/${userRatingId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setRatingSuccess('Your rating has been deleted successfully!');
+      setUserRating(0);
+      setUserRatingId(null); 
+      fetchMovie(); 
+    } catch (err) {
+      setRatingError(err.response?.data?.message || 'Failed to delete rating.');
+      console.error('Error deleting rating:', err);
+    } finally {
+      setRatingLoading(false);
     }
   };
 
@@ -180,24 +237,32 @@ function MovieDetailPage() {
       <div className="ratings-section">
         <h3>Ratings</h3>
         <p>Average Rating: {movie.averageRating ? `${movie.averageRating}/5` : 'N/A'} ({movie.numberOfRatings || 0} ratings)</p>
-        
-        {/* Phần đánh giá của người dùng */}
+
         {isAuthenticated ? (
           <div className="user-rating-form">
             <p>Your rating: {userRating > 0 ? `${userRating}/5` : 'Not rated yet'}</p>
             <div className="star-rating">
-              {[1, 2, 3, 4, 5].map((star) => (
+              {[1, 2, 3, 4, 5].map((star) => ( // Thang điểm 5
                 <span
                   key={star}
                   className={`star ${star <= userRating ? 'selected' : ''}`}
                   onClick={() => handleRateMovie(star)}
                 >
-                  &#9733; {/* Mã Unicode của ngôi sao */}
+                  &#9733;
                 </span>
               ))}
             </div>
             {ratingSuccess && <p className="success-message">{ratingSuccess}</p>}
             {ratingError && <p className="error-message">{ratingError}</p>}
+            {userRatingId && ( // Điều kiện hiển thị nút xóa
+                <button
+                  className="delete-rating-button"
+                  onClick={handleDeleteRating}
+                  disabled={ratingLoading}
+                >
+                  {ratingLoading ? 'Deleting...' : 'Delete My Rating'}
+                </button>
+            )}
           </div>
         ) : (
           <p>Please <Link to="/login">login</Link> to rate this movie.</p>
@@ -210,7 +275,6 @@ function MovieDetailPage() {
         {commentError && <p className="error-message">{commentError}</p>}
         {!commentLoading && comments.length === 0 && <p>No comments yet.</p>}
 
-        {/* Form thêm bình luận */}
         {isAuthenticated ? (
           <form className="comment-form" onSubmit={handleAddComment}>
             <textarea
@@ -225,11 +289,23 @@ function MovieDetailPage() {
           <p>Please <Link to="/login">login</Link> to add comments.</p>
         )}
 
-        {/* Danh sách bình luận */}
         <div className="comments-list">
           {comments.map((comment) => (
             <div key={comment._id} className="comment-item">
-              <p className="comment-author"><strong>{comment.name || 'Anonymous'}</strong> <span className="comment-date">({new Date(comment.createdAt).toLocaleDateString()})</span></p>
+              <p className="comment-author">
+                <strong>{comment.name || 'Anonymous'}</strong>{' '}
+                <span className="comment-date">({new Date(comment.createdAt).toLocaleDateString()})</span>
+                {/* Nút xóa bình luận */}
+                {isAuthenticated && (isAdmin || (user && user.id === comment.userId)) && ( // Điều kiện hiển thị
+                  <button
+                    className="delete-comment-button"
+                    onClick={() => handleDeleteComment(comment._id, comment.userId)}
+                    disabled={commentLoading}
+                  >
+                    Delete
+                  </button>
+                )}
+              </p>
               <p className="comment-content">{comment.content}</p>
             </div>
           ))}

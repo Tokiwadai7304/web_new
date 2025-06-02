@@ -62,7 +62,19 @@ exports.getRatings = async (req, res) => {
         }
 
         const ratings = await ratingModel.find({ movieId }).populate('userId', 'name');
-        res.status(200).json(ratings);
+        
+        // THAY ĐỔI Ở ĐÂY: Map lại để trả về userId dưới dạng chuỗi ID
+        res.status(200).json(ratings.map(r => ({
+            _id: r._id,
+            rating: r.rating,
+            movieId: r.movieId,
+            // Đảm bảo userId luôn là chuỗi ID, ngay cả khi nó không được populate
+            userId: r.userId ? r.userId._id : r.userId, 
+            createdAt: r.createdAt,
+            updatedAt: r.updatedAt,
+            // Thêm tên người dùng nếu cần hiển thị
+            userName: r.userId ? r.userId.name : 'Anonymous', 
+        })));
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });

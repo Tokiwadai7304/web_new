@@ -50,7 +50,8 @@ exports.getComments = async (req, res) => {
             _id: c._id,
             content: c.content,
             name: c.userId ? c.userId.name : c.name, 
-            createdAt: c.createdAt
+            createdAt: c.createdAt,
+            userId: c.userId._id // <-- THÊM DÒNG NÀY ĐỂ GỬI USER ID VỀ FRONTEND
         })));
     } catch (error) {
         console.error(error);

@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom'; // Loại bỏ BrowserRouter ở đây
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import './App.css';
 import MovieList from './components/MovieList';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import MovieDetailPage from './pages/MovieDetailPage'; // Đảm bảo import MovieDetailPage
+import MovieDetailPage from './pages/MovieDetailPage';
+import AddMoviePage from './pages/AddMoviePage';
+import UpdateMoviePage from './pages/UpdateMoviePage'; // Import UpdateMoviePage
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentSearch, setCurrentSearch] = useState('');
-  const { user, isAuthenticated, logout, loading } = useAuth();
-  const navigate = useNavigate(); // useNavigate bây giờ sẽ hoạt động đúng
+  const { user, isAuthenticated, logout, loading, isAdmin } = useAuth();
+  const navigate = useNavigate();
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -37,7 +39,6 @@ function App() {
   }
 
   return (
-    // Bỏ BrowserRouter ở đây vì nó đã được đặt ở index.js
     <div className="App">
       <header className="App-header">
         <h1>
@@ -62,6 +63,12 @@ function App() {
             <li><Link to="/">Home</Link></li>
             {isAuthenticated ? (
               <>
+                {isAdmin && (
+                    <>
+                        <li><Link to="/add-movie">Add Movie</Link></li>
+                        <li><Link to="/update-movie">Update Movie</Link></li> {/* Thêm Link này */}
+                    </>
+                )}
                 <li><span style={{ color: '#ccc', cursor: 'default' }}>Welcome, {user.name}</span></li>
                 <li><button onClick={handleLogout} className="nav-button">Logout</button></li>
               </>
@@ -80,6 +87,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/movies/:id" element={<MovieDetailPage />} />
+          <Route path="/add-movie" element={<AddMoviePage />} />
+          <Route path="/update-movie" element={<UpdateMoviePage />} /> {/* Thêm Route này */}
         </Routes>
       </main>
     </div>

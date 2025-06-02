@@ -1,76 +1,80 @@
 /* General App Styles */
 .App {
-  text-align: center; /* Căn giữa nội dung toàn bộ ứng dụng */
-  background-color: #1a1a1a; /* Nền màu đen */
-  min-height: 100vh; /* Đảm bảo chiều cao tối thiểu để nền đen phủ toàn bộ trang */
-  color: white; /* Màu chữ mặc định cho toàn bộ ứng dụng là trắng */
-  font-family: Arial, sans-serif; /* Chọn font chữ dễ đọc */
+  text-align: center;
+  background-color: #1a1a1a; /* Dark background for the entire app */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  color: white; /* Default text color for the app */
+  font-family: Arial, sans-serif;
 }
 
 /* Header Styles */
 .App-header {
-  background-color: #282c34; /* Màu nền hơi xám đậm cho header */
-  padding: 20px;
+  background-color: #282c34; /* Slightly darker grey for the header */
+  padding: 10px 20px;
   display: flex;
-  flex-direction: column;
-  align-items: center; /* Căn giữa theo chiều ngang */
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white; /* Đảm bảo chữ trong header là trắng */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng cho header */
+  justify-content: space-between; /* Distribute items with space between them */
+  align-items: center; /* Vertically align items in the center */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
+  gap: 10px; /* Space between header sections */
 }
 
-.App-header h1 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 2.5em; /* Kích thước tiêu đề lớn hơn */
-}
-
-/* Link cho tiêu đề */
-.App-header h1 a {
-  color: white; /* Đảm bảo màu link là trắng */
-  text-decoration: none; /* Bỏ gạch chân */
-}
-
-.App-header h1 a:hover {
-  color: #007bff; /* Thay đổi màu khi hover */
-}
-
-
-/* Search Bar Styles */
-.search-bar {
-  margin-bottom: 20px; /* Thêm khoảng cách dưới thanh tìm kiếm */
+.header-left, .header-center, .header-right {
   display: flex;
-  justify-content: center; /* Căn giữa các thành phần trong search bar */
   align-items: center;
-  width: 100%;
-  max-width: 500px;
+  flex-shrink: 0; /* Prevent items from shrinking too much */
+}
+
+.logo {
+  font-size: 2em;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+}
+
+.menu-icon {
+  font-size: 2em;
+  cursor: pointer;
+  display: none; /* Hidden by default, shown on mobile */
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1; /* Allows the search bar to expand */
+  max-width: 500px; /* Maximum width for the search bar */
+  margin: 0 20px; /* Horizontal margin */
 }
 
 .search-bar input {
-  padding: 10px 15px;
+  padding: 8px 12px;
   border-radius: 5px;
-  border: 1px solid #444; /* Viền màu xám đậm */
-  background-color: #333; /* Nền input màu xám */
-  color: white; /* Chữ trong input màu trắng */
-  font-size: 1em;
-  width: 70%;
-  margin-right: 10px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: white;
+  font-size: 0.9em;
+  width: 100%;
+  margin-right: 5px;
   outline: none;
 }
 
-.search-bar input::placeholder { /* Màu chữ placeholder */
+.search-bar input::placeholder {
   color: #bbb;
 }
 
 .search-bar button {
-  padding: 10px 20px;
-  background-color: #007bff; /* Màu xanh dương cho nút */
-  color: white; /* Chữ nút màu trắng */
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 0.9em;
   transition: background-color 0.3s ease;
 }
 
@@ -78,44 +82,78 @@
   background-color: #0056b3;
 }
 
-/* Navbar Styling */
 .main-nav ul {
   list-style: none;
   padding: 0;
-  margin: 20px 0 0 0;
+  margin: 0;
   display: flex;
-  gap: 20px;
-  justify-content: center; /* Căn giữa các mục trong navbar */
-  width: 100%;
+  gap: 15px;
+  align-items: center;
 }
 
-.main-nav li a {
-  color: white; /* Chữ link màu trắng */
+.main-nav li a,
+.main-nav li span,
+.nav-button,
+.login-signup-button {
+  color: white;
   text-decoration: none;
-  font-size: 1.1em;
-  padding: 5px 10px;
+  font-size: 1em;
+  padding: 8px 12px;
   border-radius: 5px;
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.main-nav li a:hover,
+.nav-button:hover,
+.login-signup-button:hover {
+    background-color: #0056b3;
+}
+
+/* Specific styling for login/signup button */
+.login-signup-button {
+    background-color: #28a745; /* Green color for Login/Sign up */
+}
+
+.login-signup-button:hover {
+    background-color: #218838;
+}
+
+/* Styling for nav buttons (Logout) */
+.nav-button {
+  background-color: #dc3545; /* Red color for logout */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 1em;
   transition: background-color 0.3s ease;
 }
 
-.main-nav li a:hover {
-  background-color: #0056b3;
+.nav-button:hover {
+  background-color: #c82333;
 }
 
-/* General Form Styling for Login/Register */
+/* Main content adjustments */
+main {
+  padding: 20px 0; /* Add horizontal padding for main content */
+}
+
+/* General Form Styling for Login/Register and Add/Update Movie */
 .container {
   max-width: 800px;
-  margin: 40px auto; /* Căn giữa khối container */
+  margin: 40px auto;
   padding: 20px;
-  background-color: #282c34; /* Nền form màu xám đậm */
+  background-color: #282c34;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Đổ bóng đậm hơn */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: white;
   text-align: center;
-  color: white; /* Chữ trong form màu trắng */
 }
 
 .container h2 {
-  color: white; /* Tiêu đề form màu trắng */
+  color: white;
   margin-bottom: 30px;
 }
 
@@ -124,31 +162,32 @@
   flex-direction: column;
   gap: 15px;
   max-width: 400px;
-  margin: 0 auto; /* Căn giữa form bên trong container */
+  margin: 0 auto;
   text-align: left;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 5px;
-  color: white; /* Label màu trắng */
+  color: white;
   font-weight: bold;
 }
 
-.form-group input {
+.form-group input,
+.auth-form textarea { /* Apply to textarea as well */
   width: 100%;
   padding: 10px;
-  border: 1px solid #555; /* Viền input màu xám */
+  border: 1px solid #555;
   border-radius: 5px;
-  background-color: #333; /* Nền input màu xám */
-  color: white; /* Chữ trong input màu trắng */
+  background-color: #333;
+  color: white;
   font-size: 1em;
   box-sizing: border-box;
 }
 
 .auth-form button {
   padding: 12px 20px;
-  background-color: #28a745; /* Màu xanh lá cho nút */
+  background-color: #28a745;
   color: white;
   border: none;
   border-radius: 5px;
@@ -162,71 +201,9 @@
   background-color: #218838;
 }
 
-/* MovieList Container Adjustments */
-.movie-list-container {
-  padding: 20px;
-  margin: 20px auto; /* Căn giữa khối movie list */
-  max-width: 1200px;
-  background-color: #282c34; /* Nền movie list màu xám đậm */
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  color: white; /* Chữ trong movie list màu trắng */
-}
-
-.movie-list-container h2 {
-  color: white; /* Tiêu đề movie list màu trắng */
-  margin-bottom: 20px;
-}
-
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  justify-content: center; /* Căn giữa các thẻ phim trong lưới */
-}
-
-.movie-card {
-  background-color: #333; /* Nền thẻ phim màu xám */
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  padding: 15px;
-  text-align: left;
-  transition: transform 0.2s ease-in-out;
-  color: white; /* Chữ trong thẻ phim màu trắng */
-}
-
-.movie-card:hover {
-  transform: translateY(-5px);
-}
-
-.movie-card h3 {
-  color: #00aaff; /* Màu xanh sáng cho tiêu đề phim */
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1.2em;
-}
-
-.movie-card p {
-  color: #ccc; /* Màu chữ mô tả hơi xám */
-  font-size: 0.9em;
-  line-height: 1.5;
-}
-
-.movie-poster {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.error-message {
-  color: #ff6347; /* Màu đỏ cam cho thông báo lỗi */
-  font-weight: bold;
-  text-align: center;
-}
 /* Styles for error and success messages */
 .error-message {
-  color: #ff6347; /* Màu đỏ cam */
+  color: #ff6347;
   background-color: #ffe0e0;
   border: 1px solid #ff6347;
   padding: 10px;
@@ -237,7 +214,7 @@
 }
 
 .success-message {
-  color: #28a745; /* Màu xanh lá cây */
+  color: #28a745;
   background-color: #e6ffe6;
   border: 1px solid #28a745;
   padding: 10px;
@@ -246,14 +223,67 @@
   font-weight: bold;
   text-align: center;
 }
-/* Styling for Movie Card Link */
+
+/* MovieList Container Adjustments */
+.movie-list-container {
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
+  background-color: #282c34;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.movie-list-container h2 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
 .movie-card-link {
-  text-decoration: none; /* Bỏ gạch chân cho link */
-  color: inherit; /* Kế thừa màu chữ từ parent */
+  text-decoration: none;
+  color: inherit;
 }
 
 .movie-card-link:hover .movie-card {
-  transform: translateY(-5px); /* Hiệu ứng hover giống như MovieCard */
+  transform: translateY(-5px);
+}
+
+.movie-card {
+  background-color: #333;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  text-align: left;
+  transition: transform 0.2s ease-in-out;
+  color: white;
+}
+
+.movie-card h3 {
+  color: #00aaff;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.movie-card p {
+  color: #ccc;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.movie-poster {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
 
 /* Movie Detail Page Styles */
@@ -270,7 +300,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 30px;
-  flex-direction: column; /* Đặt poster và title trên cùng một hàng */
+  flex-direction: column; /* Default to column for small screens */
   text-align: center;
 }
 
@@ -285,7 +315,7 @@
 .movie-detail-page h1 {
   color: #00aaff;
   font-size: 2.5em;
-  margin-left: 0; /* Bỏ margin-left nếu bạn đổi thành column */
+  margin-left: 0; /* Reset margin for column layout */
 }
 
 .movie-info p {
@@ -327,30 +357,11 @@
 }
 
 .comment-form textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #444;
-  border-radius: 5px;
-  background-color: #333;
-  color: white;
-  font-size: 1em;
-  resize: vertical; /* Cho phép thay đổi kích thước theo chiều dọc */
+  resize: vertical; /* Allow vertical resizing */
 }
 
 .comment-form button {
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1em;
-  transition: background-color 0.3s ease;
-  align-self: flex-end; /* Đặt nút ở cuối bên phải */
-}
-
-.comment-form button:hover {
-  background-color: #0056b3;
+  align-self: flex-end; /* Align button to the right */
 }
 
 .comments-list {
@@ -371,6 +382,13 @@
   color: #00aaff;
   margin-bottom: 5px;
   font-size: 0.95em;
+  display: flex; /* Use flex to align name, date, and delete button */
+  align-items: center;
+  justify-content: space-between; /* Push delete button to the right */
+}
+
+.comment-author strong {
+    flex-shrink: 0; /* Prevent name from shrinking too much */
 }
 
 .comment-date {
@@ -378,12 +396,32 @@
   color: #bbb;
   font-weight: normal;
   margin-left: 10px;
+  flex-grow: 1; /* Allow date to take up available space */
+  text-align: left; /* Align date to the left within its space */
 }
 
 .comment-content {
   color: #ccc;
   line-height: 1.5;
   font-size: 0.9em;
+}
+
+/* Styling for Delete Comment button */
+.delete-comment-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 0.8em;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.delete-comment-button:hover {
+  background-color: #c82333;
 }
 
 /* Rating Section Styles */
@@ -397,60 +435,27 @@
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  font-size: 2em; /* Kích thước ngôi sao */
-  gap: 5px; /* Khoảng cách giữa các ngôi sao */
+  font-size: 2em;
+  gap: 5px;
 }
 
 .star {
   cursor: pointer;
-  color: #ccc; /* Màu ngôi sao chưa chọn */
+  color: #ccc;
   transition: color 0.2s ease;
 }
 
 .star.selected {
-  color: #FFD700; /* Màu vàng ngôi sao đã chọn */
+  color: #FFD700;
 }
 
 .star:hover {
-  color: #FFD700; /* Màu vàng khi hover */
-}
-
-/* Styling for Delete button */
-.delete-button {
-  background-color: #dc3545; /* Màu đỏ cho nút xóa */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 12px 20px; /* Kích thước tương tự nút submit */
-  cursor: pointer;
-  font-size: 1.1em;
-  transition: background-color 0.3s ease;
-}
-
-.delete-button:hover {
-  background-color: #c82333;
-}
-
-/* Styling for Delete Comment button */
-.delete-comment-button {
-  background-color: #dc3545; /* Màu đỏ */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 8px;
-  cursor: pointer;
-  font-size: 0.8em;
-  margin-left: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.delete-comment-button:hover {
-  background-color: #c82333;
+  color: #FFD700;
 }
 
 /* Styling for Delete Rating button */
 .delete-rating-button {
-  background-color: #dc3545; /* Màu đỏ */
+  background-color: #dc3545;
   color: white;
   border: none;
   border-radius: 4px;
@@ -463,4 +468,263 @@
 
 .delete-rating-button:hover {
   background-color: #c82333;
+}
+
+/* Styling for Delete button in Update Movie Page */
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+
+/* ========================================= */
+/* Responsive Styles (Media Queries)         */
+/* ========================================= */
+
+/* --- For screens smaller than 800px (e.g., portrait tablets, phones) --- */
+@media (max-width: 800px) {
+  .App-header {
+    flex-direction: column; /* Stack header items vertically */
+    padding: 15px;
+    align-items: stretch; /* Stretch items to fill width */
+  }
+
+  .header-left, .header-center, .header-right {
+    width: 100%; /* Take full width */
+    justify-content: center; /* Center content within their sections */
+    margin-bottom: 10px; /* Add space between stacked sections */
+  }
+
+  .header-left {
+    justify-content: space-between; /* Space out logo and menu icon */
+  }
+
+  .menu-icon {
+    display: block; /* Show menu icon on small screens */
+  }
+
+  .logo {
+    margin-right: 0; /* Remove right margin for logo */
+  }
+
+  .search-bar {
+    flex-direction: column;
+    width: 100%;
+    margin: 0; /* Remove horizontal margin */
+  }
+
+  .search-bar input {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .search-bar button {
+    width: 100%;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px; /* Add margin after search bar */
+  }
+
+  .main-nav li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .main-nav li a,
+  .main-nav li span,
+  .nav-button,
+  .login-signup-button {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #333;
+    border-radius: 5px;
+  }
+  .main-nav li a:hover,
+  .nav-button:hover,
+  .login-signup-button:hover {
+      background-color: #0056b3;
+  }
+
+  .container {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+  }
+
+  .movie-card h3 {
+    font-size: 1em;
+  }
+
+  .movie-detail-page {
+    padding: 20px;
+  }
+
+  .movie-detail-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .movie-detail-poster {
+    max-width: 200px;
+    margin-bottom: 15px;
+    margin-right: 0; /* Reset margin for column layout */
+  }
+
+  .movie-detail-page h1 {
+    font-size: 1.8em;
+    margin-left: 0;
+  }
+
+  .user-rating-form,
+  .comment-form {
+    max-width: 100%;
+  }
+
+  .star-rating {
+    font-size: 1.2em;
+    gap: 2px;
+  }
+
+  .comment-author {
+      flex-direction: column; /* Stack author name, date, and delete button */
+      align-items: flex-start;
+      gap: 5px;
+  }
+
+  .comment-date {
+      margin-left: 0; /* Reset margin */
+      text-align: left;
+  }
+
+  .delete-comment-button {
+      margin-left: 0; /* Reset margin */
+      align-self: flex-end; /* Align button to the right */
+  }
+}
+
+/* --- For screens from 801px to 1200px (e.g., landscape tablets, small laptops) --- */
+@media (min-width: 801px) and (max-width: 1200px) {
+  .App-header {
+    padding: 15px 20px; /* Slightly more padding */
+  }
+
+  .logo {
+    font-size: 1.8em;
+  }
+
+  .search-bar {
+    max-width: 400px;
+  }
+
+  .main-nav ul {
+    gap: 10px;
+  }
+
+  .main-nav li a,
+  .main-nav li span,
+  .nav-button,
+  .login-signup-button {
+    font-size: 0.95em;
+    padding: 6px 10px;
+  }
+
+  .container {
+    max-width: 90%;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .movie-detail-page {
+    max-width: 800px;
+  }
+
+  .movie-detail-header {
+    flex-direction: row; /* Keep poster and title side-by-side */
+    align-items: flex-start;
+  }
+
+  .movie-detail-poster {
+    max-width: 200px;
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+
+  .movie-detail-page h1 {
+    font-size: 2em;
+  }
+}
+
+/* --- For screens larger than 1200px (large desktops) --- */
+/* Default styles are already set for large screens, so minimal changes here */
+@media (min-width: 1201px) {
+  .App-header {
+    padding: 20px 30px;
+  }
+
+  .logo {
+    font-size: 2em;
+  }
+
+  .search-bar {
+    max-width: 500px;
+  }
+
+  .main-nav ul {
+    gap: 15px;
+  }
+
+  .main-nav li a,
+  .main-nav li span,
+  .nav-button,
+  .login-signup-button {
+    font-size: 1em;
+    padding: 8px 12px;
+  }
+
+  .container {
+    max-width: 1200px;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .movie-detail-page {
+    max-width: 900px;
+  }
+
+  .movie-detail-header {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .movie-detail-poster {
+    max-width: 300px;
+    margin-right: 30px;
+    margin-bottom: 0;
+  }
 }

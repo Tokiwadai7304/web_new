@@ -7,7 +7,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import MovieDetailPage from './pages/MovieDetailPage';
 import AddMoviePage from './pages/AddMoviePage';
-import UpdateMoviePage from './pages/UpdateMoviePage'; // Import UpdateMoviePage
+import UpdateMoviePage from './pages/UpdateMoviePage';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -41,45 +41,53 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>
-          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Movie Review Website</Link>
-        </h1>
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search movies by title or genre..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                handleSearchSubmit();
-              }
-            }}
-          />
-          <button onClick={handleSearchSubmit}>Search</button>
+        <div className="header-left"> {/* Container cho Logo và Menu */}
+          <div className="logo">
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>LOGO</Link> {/* Thay đổi thành LOGO */}
+          </div>
+          <div className="menu-icon">☰</div> {/* Biểu tượng Menu (Hamburger) */}
         </div>
-        <nav className="main-nav">
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            {isAuthenticated ? (
-              <>
-                {isAdmin && (
-                    <>
-                        <li><Link to="/add-movie">Add Movie</Link></li>
-                        <li><Link to="/update-movie">Update Movie</Link></li> {/* Thêm Link này */}
-                    </>
-                )}
-                <li><span style={{ color: '#ccc', cursor: 'default' }}>Welcome, {user.name}</span></li>
-                <li><button onClick={handleLogout} className="nav-button">Logout</button></li>
-              </>
-            ) : (
-              <>
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="/register">Register</Link></li>
-              </>
-            )}
-          </ul>
-        </nav>
+
+        <div className="header-center"> {/* Container cho Search Bar */}
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Search movies by title or genre..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearchSubmit();
+                }
+              }}
+            />
+            <button onClick={handleSearchSubmit}>Search</button>
+          </div>
+        </div>
+
+        <div className="header-right"> {/* Container cho Login/Sign up và Logout */}
+          <nav className="main-nav">
+            <ul>
+              {isAuthenticated ? (
+                <>
+                  {isAdmin && (
+                      <>
+                          <li><Link to="/add-movie">Add Movie</Link></li>
+                          <li><Link to="/update-movie">Update Movie</Link></li>
+                      </>
+                  )}
+                  <li><span style={{ color: '#ccc', cursor: 'default' }}>Welcome, {user.name}</span></li>
+                  <li><button onClick={handleLogout} className="nav-button">Logout</button></li>
+                </>
+              ) : (
+                <>
+                  {/* Thay thế nút Login/Register bằng một nút duy nhất như trong wireframe */}
+                  <li><Link to="/login" className="login-signup-button">Login/Sign up</Link></li>
+                </>
+              )}
+            </ul>
+          </nav>
+        </div>
       </header>
       <main>
         <Routes>
@@ -88,7 +96,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/movies/:id" element={<MovieDetailPage />} />
           <Route path="/add-movie" element={<AddMoviePage />} />
-          <Route path="/update-movie" element={<UpdateMoviePage />} /> {/* Thêm Route này */}
+          <Route path="/update-movie" element={<UpdateMoviePage />} />
         </Routes>
       </main>
     </div>

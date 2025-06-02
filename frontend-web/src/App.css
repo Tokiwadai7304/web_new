@@ -1,0 +1,387 @@
+/* General App Styles */
+.App {
+  text-align: center; /* Căn giữa nội dung toàn bộ ứng dụng */
+  background-color: #1a1a1a; /* Nền màu đen */
+  min-height: 100vh; /* Đảm bảo chiều cao tối thiểu để nền đen phủ toàn bộ trang */
+  color: white; /* Màu chữ mặc định cho toàn bộ ứng dụng là trắng */
+  font-family: Arial, sans-serif; /* Chọn font chữ dễ đọc */
+}
+
+/* Header Styles */
+.App-header {
+  background-color: #282c34; /* Màu nền hơi xám đậm cho header */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Căn giữa theo chiều ngang */
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white; /* Đảm bảo chữ trong header là trắng */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng cho header */
+}
+
+.App-header h1 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 2.5em; /* Kích thước tiêu đề lớn hơn */
+}
+
+/* Link cho tiêu đề */
+.App-header h1 a {
+  color: white; /* Đảm bảo màu link là trắng */
+  text-decoration: none; /* Bỏ gạch chân */
+}
+
+.App-header h1 a:hover {
+  color: #007bff; /* Thay đổi màu khi hover */
+}
+
+
+/* Search Bar Styles */
+.search-bar {
+  margin-bottom: 20px; /* Thêm khoảng cách dưới thanh tìm kiếm */
+  display: flex;
+  justify-content: center; /* Căn giữa các thành phần trong search bar */
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.search-bar input {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #444; /* Viền màu xám đậm */
+  background-color: #333; /* Nền input màu xám */
+  color: white; /* Chữ trong input màu trắng */
+  font-size: 1em;
+  width: 70%;
+  margin-right: 10px;
+  outline: none;
+}
+
+.search-bar input::placeholder { /* Màu chữ placeholder */
+  color: #bbb;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  background-color: #007bff; /* Màu xanh dương cho nút */
+  color: white; /* Chữ nút màu trắng */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #0056b3;
+}
+
+/* Navbar Styling */
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+  display: flex;
+  gap: 20px;
+  justify-content: center; /* Căn giữa các mục trong navbar */
+  width: 100%;
+}
+
+.main-nav li a {
+  color: white; /* Chữ link màu trắng */
+  text-decoration: none;
+  font-size: 1.1em;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.main-nav li a:hover {
+  background-color: #0056b3;
+}
+
+/* General Form Styling for Login/Register */
+.container {
+  max-width: 800px;
+  margin: 40px auto; /* Căn giữa khối container */
+  padding: 20px;
+  background-color: #282c34; /* Nền form màu xám đậm */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Đổ bóng đậm hơn */
+  text-align: center;
+  color: white; /* Chữ trong form màu trắng */
+}
+
+.container h2 {
+  color: white; /* Tiêu đề form màu trắng */
+  margin-bottom: 30px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: 0 auto; /* Căn giữa form bên trong container */
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: white; /* Label màu trắng */
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #555; /* Viền input màu xám */
+  border-radius: 5px;
+  background-color: #333; /* Nền input màu xám */
+  color: white; /* Chữ trong input màu trắng */
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.auth-form button {
+  padding: 12px 20px;
+  background-color: #28a745; /* Màu xanh lá cho nút */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+}
+
+.auth-form button:hover {
+  background-color: #218838;
+}
+
+/* MovieList Container Adjustments */
+.movie-list-container {
+  padding: 20px;
+  margin: 20px auto; /* Căn giữa khối movie list */
+  max-width: 1200px;
+  background-color: #282c34; /* Nền movie list màu xám đậm */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: white; /* Chữ trong movie list màu trắng */
+}
+
+.movie-list-container h2 {
+  color: white; /* Tiêu đề movie list màu trắng */
+  margin-bottom: 20px;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center; /* Căn giữa các thẻ phim trong lưới */
+}
+
+.movie-card {
+  background-color: #333; /* Nền thẻ phim màu xám */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  text-align: left;
+  transition: transform 0.2s ease-in-out;
+  color: white; /* Chữ trong thẻ phim màu trắng */
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+}
+
+.movie-card h3 {
+  color: #00aaff; /* Màu xanh sáng cho tiêu đề phim */
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.movie-card p {
+  color: #ccc; /* Màu chữ mô tả hơi xám */
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.movie-poster {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.error-message {
+  color: #ff6347; /* Màu đỏ cam cho thông báo lỗi */
+  font-weight: bold;
+  text-align: center;
+}
+/* Styles for error and success messages */
+.error-message {
+  color: #ff6347; /* Màu đỏ cam */
+  background-color: #ffe0e0;
+  border: 1px solid #ff6347;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.success-message {
+  color: #28a745; /* Màu xanh lá cây */
+  background-color: #e6ffe6;
+  border: 1px solid #28a745;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+/* Styling for Movie Card Link */
+.movie-card-link {
+  text-decoration: none; /* Bỏ gạch chân cho link */
+  color: inherit; /* Kế thừa màu chữ từ parent */
+}
+
+.movie-card-link:hover .movie-card {
+  transform: translateY(-5px); /* Hiệu ứng hover giống như MovieCard */
+}
+
+/* Movie Detail Page Styles */
+.movie-detail-page {
+  background-color: #282c34;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  max-width: 900px;
+  text-align: left;
+}
+
+.movie-detail-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-direction: column; /* Đặt poster và title trên cùng một hàng */
+  text-align: center;
+}
+
+.movie-detail-poster {
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.movie-detail-page h1 {
+  color: #00aaff;
+  font-size: 2.5em;
+  margin-left: 0; /* Bỏ margin-left nếu bạn đổi thành column */
+}
+
+.movie-info p {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.movie-info strong {
+  color: #ccc;
+}
+
+.movie-info a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.movie-info a:hover {
+  text-decoration: underline;
+}
+
+.comments-section, .ratings-section, .movie-actions {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #444;
+}
+
+.comments-section h3, .ratings-section h3 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+/* Comment Section Styles */
+.comment-form {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  font-size: 1em;
+  resize: vertical; /* Cho phép thay đổi kích thước theo chiều dọc */
+}
+
+.comment-form button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+  align-self: flex-end; /* Đặt nút ở cuối bên phải */
+}
+
+.comment-form button:hover {
+  background-color: #0056b3;
+}
+
+.comments-list {
+  margin-top: 20px;
+}
+
+.comment-item {
+  background-color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #00aaff;
+  margin-bottom: 5px;
+  font-size: 0.95em;
+}
+
+.comment-date {
+  font-size: 0.85em;
+  color: #bbb;
+  font-weight: normal;
+  margin-left: 10px;
+}
+
+.comment-content {
+  color: #ccc;
+  line-height: 1.5;
+  font-size: 0.9em;
+}

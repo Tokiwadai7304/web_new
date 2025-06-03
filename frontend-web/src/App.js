@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from './context/AuthContext'; // [cite: 1]
 import './App.css';
 import MovieList from './components/MovieList';
 import LoginPage from './pages/LoginPage';
@@ -8,7 +8,8 @@ import RegisterPage from './pages/RegisterPage';
 import MovieDetailPage from './pages/MovieDetailPage';
 import AddMoviePage from './pages/AddMoviePage';
 import UpdateMoviePage from './pages/UpdateMoviePage';
-import BackToTopButton from './components/BackToTopButton'; // IMPORT COMPONENT MỚI
+import BackToTopButton from './components/BackToTopButton';
+import AdPopup from './components/AdPopup'; // << IMPORT COMPONENT AdPopup MỚI
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -55,6 +56,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        {/* ... (Nội dung header giữ nguyên) ... */}
         <div className="header-left">
           <div className="logo" onClick={handleLogoClick}>
             <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>LOGO</Link>
@@ -72,7 +74,6 @@ function App() {
                   {isAdmin && (
                       <>
                           <li><Link to="/add-movie">Add Movie</Link></li>
-                          {/* Nút Update Movie đã được chuyển vào MovieDetailPage */}
                       </>
                   )}
                   <li><span style={{ color: '#ccc', cursor: 'default' }}>Welcome, {user.name}</span></li>
@@ -118,7 +119,6 @@ function App() {
             />
             <button onClick={handleSearchSubmit}>Search</button>
           </div>
-
       </header>
       <main>
         <Routes>
@@ -131,8 +131,8 @@ function App() {
         </Routes>
       </main>
       
-      {/* THÊM COMPONENT BackToTopButton VÀO ĐÂY */}
       <BackToTopButton />
+      <AdPopup /> {/* << THÊM COMPONENT AdPopup VÀO ĐÂY */}
     </div>
   );
 }

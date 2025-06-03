@@ -6,8 +6,11 @@ const { verifyToken, authorizeRoles } = require('../middlewares/validateMiddlewa
 
 movieRouter.post('/', verifyToken, authorizeRoles(['admin']), movieController.addMovie);
 movieRouter.get('/', movieController.getAllMovies);
-movieRouter.get('/:id', movieController.getMovieById); // <-- THÊM DÒNG NÀY
-movieRouter.put('/by-name/:title', verifyToken, authorizeRoles(['admin']), movieController.updateMovie);
+movieRouter.get('/:id', movieController.getMovieById);
+
+
+movieRouter.put('/:id', verifyToken, authorizeRoles(['admin']), movieController.updateMovieById);
+
 movieRouter.delete('/by-name/:title', verifyToken, authorizeRoles(['admin']), movieController.deleteMovie);
 
 module.exports = movieRouter;

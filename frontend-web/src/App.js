@@ -8,6 +8,7 @@ import RegisterPage from './pages/RegisterPage';
 import MovieDetailPage from './pages/MovieDetailPage';
 import AddMoviePage from './pages/AddMoviePage';
 import UpdateMoviePage from './pages/UpdateMoviePage';
+import BackToTopButton from './components/BackToTopButton'; // IMPORT COMPONENT MỚI
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,7 +23,7 @@ function App() {
 
   const handleSearchSubmit = () => {
     setCurrentSearch(searchTerm);
-    if (window.innerWidth <= 800) { // Hide search bar after search on mobile
+    if (window.innerWidth <= 800) { 
       setShowSearchBar(false);
     }
   };
@@ -32,15 +33,13 @@ function App() {
     navigate('/login');
   };
 
-  const toggleSearchBar = () => { // New function to toggle search bar visibility
+  const toggleSearchBar = () => { 
     setShowSearchBar(prev => !prev);
   };
 
-  // HÀM ĐỂ RESET TÌM KIẾM KHI CLICK LOGO
   const handleLogoClick = () => {
-    setSearchTerm('');     // Xóa nội dung trong ô input tìm kiếm
-    setCurrentSearch('');  // Xóa giá trị tìm kiếm hiện tại đang dùng cho MovieList
-    // Việc điều hướng về trang chủ ("/") đã được Link component xử lý
+    setSearchTerm('');     
+    setCurrentSearch('');  
   };
 
   if (loading) {
@@ -57,16 +56,14 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="header-left">
-          {/* GỌI HÀM handleLogoClick KHI CLICK VÀO LOGO */}
           <div className="logo" onClick={handleLogoClick}>
             <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>LOGO</Link>
           </div>
         </div>
 
-        {/* THỨ TỰ ĐÚNG: ICON TÌM KIẾM TRƯỚC, SAU ĐÓ ĐẾN NAV (NÚT LOGIN) */}
         <div className="header-right-top">
           <div className="search-icon" onClick={toggleSearchBar}>
-            🔍 {/* Search icon */}
+            🔍 
           </div>
           <nav className="main-nav">
             <ul>
@@ -75,7 +72,7 @@ function App() {
                   {isAdmin && (
                       <>
                           <li><Link to="/add-movie">Add Movie</Link></li>
-                          <li><Link to="/update-movie">Update Movie</Link></li>
+                          {/* Nút Update Movie đã được chuyển vào MovieDetailPage */}
                       </>
                   )}
                   <li><span style={{ color: '#ccc', cursor: 'default' }}>Welcome, {user.name}</span></li>
@@ -90,7 +87,6 @@ function App() {
           </nav>
         </div>
         
-        {/* Thanh tìm kiếm mobile (hiển thị dưới header chính khi active) */}
         {showSearchBar && (
           <div className="search-bar-mobile">
             <input
@@ -108,7 +104,6 @@ function App() {
           </div>
         )}
 
-        {/* Thanh tìm kiếm desktop (ẩn trên mobile bởi CSS) */}
         <div className="search-bar-desktop">
             <input
               type="text"
@@ -132,9 +127,12 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/movies/:id" element={<MovieDetailPage />} />
           <Route path="/add-movie" element={<AddMoviePage />} />
-          <Route path="/update-movie" element={<UpdateMoviePage />} />
+          <Route path="/update-movie/:movieId" element={<UpdateMoviePage />} />
         </Routes>
       </main>
+      
+      {/* THÊM COMPONENT BackToTopButton VÀO ĐÂY */}
+      <BackToTopButton />
     </div>
   );
 }

@@ -11,8 +11,7 @@
 
 .movie-list-container h2 {
   color: white; /* Giữ màu chữ trắng */
-  margin-bottom: 20px;
-  text-align: center; /* Căn giữa tiêu đề */
+  /* margin-bottom: 20px; /* Bỏ margin ở đây để div cha của h2 và sorting-controls xử lý */
 }
 
 /* Styles cho danh sách phim dạng list */
@@ -89,6 +88,32 @@
 }
 
 
+/* --- STYLES MỚI CHO ĐIỀU KHIỂN SẮP XẾP --- */
+.sorting-controls-container { /* Class cho div cha của các select */
+  display: flex;
+  gap: 15px; /* Khoảng cách giữa "Sort By" và "Order" group */
+  align-items: center; /* Căn chỉnh các label và select theo chiều dọc */
+}
+
+.sort-label {
+  margin-right: 5px;
+  color: #ccc; /* Màu chữ xám nhạt cho label */
+  font-size: 0.9em;
+}
+
+.sort-select {
+  padding: 8px 12px; /* Kích thước padding tương tự các input khác */
+  border-radius: 5px; /* Bo góc tương tự các input khác */
+  border: 1px solid #444; /* Border tương tự các input khác */
+  background-color: #333; /* Nền đậm tương tự các input khác */
+  color: white; /* Chữ trắng */
+  font-size: 0.9em; /* Kích thước font tương tự các input khác */
+  cursor: pointer;
+}
+
+/* --- HẾT STYLES MỚI --- */
+
+
 /* Responsive adjustments for MovieList */
 @media (max-width: 800px) {
   .movie-list-container {
@@ -101,31 +126,51 @@
   }
 
   .movie-list-item {
-    flex-direction: row; /* Thay đổi: Quay lại dạng hàng (row) trên mobile */
-    align-items: center; /* Căn giữa theo chiều dọc */
+    flex-direction: row; 
+    align-items: center; 
     padding: 10px;
   }
 
   .movie-poster-wrapper {
-    width: 70px; /* Giảm kích thước poster trên mobile để phù hợp hơn */
-    height: 100px; /* Giảm chiều cao tương ứng */
-    margin-right: 15px; /* Giữ khoảng cách giữa poster và thông tin */
-    margin-bottom: 0; /* Bỏ margin-bottom nếu là dạng row */
+    width: 70px; 
+    height: 100px; 
+    margin-right: 15px; 
+    margin-bottom: 0; 
   }
   .movie-poster-list {
-    object-fit: cover; /* Giữ nguyên cover */
+    object-fit: cover; 
   }
 
   .movie-info-list {
-    width: auto; /* Để width tự động điều chỉnh */
+    width: auto; 
   }
 
   .movie-info-list h3 {
-    font-size: 1.1em; /* Giảm kích thước font cho tiêu đề trên mobile */
-    text-align: left; /* Căn lề trái */
+    font-size: 1.1em; 
+    text-align: left; 
   }
   .movie-info-list p {
-    font-size: 0.8em; /* Giảm kích thước font cho thông tin */
+    font-size: 0.8em; 
+  }
+
+  /* Điều chỉnh cho sorting controls trên mobile nếu cần */
+  .sorting-controls-container {
+    flex-direction: column; /* Xếp chồng trên mobile */
+    align-items: flex-end; /* Căn phải */
+    gap: 8px; /* Giảm khoảng cách */
+    width: 100%; /* Có thể cho chiếm toàn bộ nếu div cha của h2 và nó không có display:flex */
+  }
+  .sorting-controls-container > div { /* Mỗi cặp label-select */
+    display: flex;
+    align-items: center;
+    width: auto; /* Để nó co lại theo nội dung */
+  }
+  .sort-select {
+    padding: 6px 10px; /* Giảm padding cho select trên mobile */
+    font-size: 0.85em;
+  }
+  .sort-label {
+    font-size: 0.85em;
   }
 }
 
